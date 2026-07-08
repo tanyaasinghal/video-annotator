@@ -6,7 +6,10 @@
       "type": "simple",
       "options": [
         "Grounded",
-        "Aerial"
+        "Aerial",
+        "Edged",
+        "Beaten",
+        "Left"
       ]
     },
     {
@@ -29,44 +32,43 @@
     },
     {
       "id": "shotClassification",
-      "name": "Shot Classification",
+      "name": "Shot Classification (Batsman)",
       "type": "group",
       "groups": [
         {
-          "name": "Defensive Shots",
+          "name": "Defensive Shots (Blocking / Leaving)",
           "options": [
             "Forward Defence",
-            "Backward Defence",
-            "The Leave"
+            "Backward Defence"
           ]
         },
         {
-          "name": "Vertical-Bat",
+          "name": "Vertical-Bat / Straight-Bat Shots (Drives & Glances)",
           "options": [
-            "Straight Drive",
-            "Cover Drive",
-            "On Drive",
-            "Off Drive",
+            "Steer",
             "Square Drive",
+            "Cover Drive",
+            "Off Drive",
+            "Straight Drive",
+            "On Drive",
             "Leg Glance / Flick"
           ]
         },
         {
-          "name": "Horizontal-Bat",
+          "name": "Horizontal-Bat / Cross-Bat Shots",
           "options": [
             "Square Cut",
             "Late Cut",
             "Pull Shot",
-            "Hook Shot"
+            "Hook Shot",
+            "Slog"
           ]
         },
         {
-          "name": "Sweep Family",
+          "name": "Sweep Family (Against Spin)",
           "options": [
-            "Sweep Shot",
-            "Slog Sweep",
-            "Reverse Sweep",
-            "Reverse Slog Sweep"
+            "Sweep",
+            "Reverse Sweep"
           ]
         },
         {
@@ -77,24 +79,15 @@
             "Scoop",
             "Upper Cut",
             "Inside-Out Shot",
-            "Slug Shot",
-            "Lofted Shot"
-          ]
-        },
-        {
-          "name": "Other Variations",
-          "options": [
             "Back-foot Punch",
-            "Flick Shot",
-            "Defensive Push / Drop",
-            "Inside Edge"
+            "Others"
           ]
         }
       ]
     },
     {
       "id": "shotDirection",
-      "name": "Shot Direction",
+      "name": "Shot Direction (Ball)",
       "type": "group",
       "groups": [
         {
