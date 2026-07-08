@@ -34,7 +34,7 @@ Make sure you have the following installed:
 Clone the repository:
 
 ```bash
-git clone https://github.com/<your-username>/video-annotator.git
+git clone https://github.com/tanyaasinghal/video-annotator
 ```
 
 Navigate to the project directory:
