@@ -1,0 +1,113 @@
+{
+  "categories": [
+    {
+      "id": "shotElevation",
+      "name": "Shot Elevation",
+      "type": "simple",
+      "options": [
+        "Grounded",
+        "Aerial"
+      ]
+    },
+    {
+      "id": "shotClassification",
+      "name": "Shot Classification",
+      "type": "group",
+      "groups": [
+        {
+          "name": "Defensive Shots",
+          "options": [
+            "Forward Defence",
+            "Backward Defence",
+            "The Leave"
+          ]
+        },
+        {
+          "name": "Vertical-Bat",
+          "options": [
+            "Straight Drive",
+            "Cover Drive",
+            "On Drive",
+            "Off Drive",
+            "Square Drive",
+            "Leg Glance / Flick"
+          ]
+        },
+        {
+          "name": "Horizontal-Bat",
+          "options": [
+            "Square Cut",
+            "Late Cut",
+            "Pull Shot",
+            "Hook Shot"
+          ]
+        },
+        {
+          "name": "Sweep Family",
+          "options": [
+            "Sweep Shot",
+            "Slog Sweep",
+            "Reverse Sweep",
+            "Reverse Slog Sweep"
+          ]
+        },
+        {
+          "name": "Unorthodox / Innovative",
+          "options": [
+            "Helicopter Shot",
+            "Switch Hit",
+            "Scoop",
+            "Upper Cut",
+            "Inside-Out Shot",
+            "Slug Shot",
+            "Lofted Shot"
+          ]
+        },
+        {
+          "name": "Other Variations",
+          "options": [
+            "Back-foot Punch",
+            "Flick Shot",
+            "Defensive Push / Drop",
+            "Inside Edge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shotDirection",
+      "name": "Shot Direction",
+      "type": "group",
+      "groups": [
+        {
+          "name": "Offside",
+          "options": [
+            "Cover",
+            "Point"
+          ]
+        },
+        {
+          "name": "Legside",
+          "options": [
+            "Mid-Wicket",
+            "Square-Leg"
+          ]
+        },
+        {
+          "name": "Straight",
+          "options": [
+            "Long-Off",
+            "Long-On"
+          ]
+        },
+        {
+          "name": "Behind",
+          "options": [
+            "Third Man",
+            "Fine Leg"
+          ]
+        }
+      ]
+    }
+  ]
+}
