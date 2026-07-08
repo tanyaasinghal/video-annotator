@@ -82,149 +82,155 @@ export default function CategorySidebar() {
         overflowY: "auto"
       }}
     >
-      {schema.map((category, index) => (
-        <Box key={category.id}>
+      {schema
+        .filter(
+          category =>
+            category.id !== "batsmanHand" &&
+            category.id !== "contact"
+        )
+        .map((category, index) => (
+          <Box key={category.id}>
 
-          <Typography
-            variant="h6"
-            sx={{
-              color: "white",
-              fontWeight: 600
-            }}
-          >
-            {category.name}
-          </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "white",
+                fontWeight: 600
+              }}
+            >
+              {category.name}
+            </Typography>
 
-          {category.type === "simple" && (
-            <FormControl fullWidth sx={{ mt: 2 }}>
-              <InputLabel sx={inputLabelSx}>
-                Select
-              </InputLabel>
-
-              <Select
-                sx={selectSx}
-                label="Select"
-                value={currentVideo.labels[category.id] || ""}
-                onChange={async (e) => {
-                  updateCurrentVideoLabel(
-                    category.id,
-                    e.target.value
-                  );
-
-                  scheduleSave();
-                }}
-              >
-                {category.options?.map((option) => (
-                  <MenuItem
-                    key={option}
-                    value={option}
-                  >
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
-
-          {category.type === "group" && (
-            <>
-              <FormControl
-                fullWidth
-                sx={{ mt: 2 }}
-              >
+            {category.type === "simple" && (
+              <FormControl fullWidth sx={{ mt: 2 }}>
                 <InputLabel sx={inputLabelSx}>
-                  Group
+                  Select
                 </InputLabel>
 
                 <Select
                   sx={selectSx}
-                  label="Group"
-                  value={
-                    currentVideo.labels[
-                    `${category.id}Group`
-                    ] || ""
-                  }
+                  label="Select"
+                  value={currentVideo.labels[category.id] || ""}
                   onChange={async (e) => {
-
                     updateCurrentVideoLabel(
-                      `${category.id}Group`,
+                      category.id,
                       e.target.value
                     );
 
-                    updateCurrentVideoLabel(
-                      category.id,
-                      ""
-                    );
-
                     scheduleSave();
-
                   }}
                 >
-                  {category.groups?.map((group) => (
+                  {category.options?.map((option) => (
                     <MenuItem
-                      key={group.name}
-                      value={group.name}
+                      key={option}
+                      value={option}
                     >
-                      {group.name}
+                      {option}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
+            )}
 
-              <FormControl
-                fullWidth
-                sx={{ mt: 2 }}
-              >
-                <InputLabel sx={inputLabelSx}>
-                  Option
-                </InputLabel>
-
-                <Select
-                  sx={selectSx}
-                  label="Option"
-                  value={
-                    currentVideo.labels[
-                    category.id
-                    ] || ""
-                  }
-                  onChange={async (e) => {
-
-                    updateCurrentVideoLabel(
-                      category.id,
-                      e.target.value
-                    );
-
-                    scheduleSave();
-
-                  }}
+            {category.type === "group" && (
+              <>
+                <FormControl
+                  fullWidth
+                  sx={{ mt: 2 }}
                 >
-                  {category.groups
-                    ?.find(
-                      (group) =>
-                        group.name ===
-                        currentVideo.labels[
-                        `${category.id}Group`
-                        ]
-                    )
-                    ?.options?.map((option) => (
+                  <InputLabel sx={inputLabelSx}>
+                    Group
+                  </InputLabel>
+
+                  <Select
+                    sx={selectSx}
+                    label="Group"
+                    value={
+                      currentVideo.labels[
+                      `${category.id}Group`
+                      ] || ""
+                    }
+                    onChange={async (e) => {
+
+                      updateCurrentVideoLabel(
+                        `${category.id}Group`,
+                        e.target.value
+                      );
+
+                      updateCurrentVideoLabel(
+                        category.id,
+                        ""
+                      );
+
+                      scheduleSave();
+
+                    }}
+                  >
+                    {category.groups?.map((group) => (
                       <MenuItem
-                        key={option}
-                        value={option}
+                        key={group.name}
+                        value={group.name}
                       >
-                        {option}
+                        {group.name}
                       </MenuItem>
                     ))}
-                </Select>
-              </FormControl>
-            </>
-          )}
+                  </Select>
+                </FormControl>
 
-          {index !== schema.length - 1 && (
-            <Divider sx={{ my: 4 }} />
-          )}
+                <FormControl
+                  fullWidth
+                  sx={{ mt: 2 }}
+                >
+                  <InputLabel sx={inputLabelSx}>
+                    Option
+                  </InputLabel>
 
-        </Box>
-      ))}
+                  <Select
+                    sx={selectSx}
+                    label="Option"
+                    value={
+                      currentVideo.labels[
+                      category.id
+                      ] || ""
+                    }
+                    onChange={async (e) => {
+
+                      updateCurrentVideoLabel(
+                        category.id,
+                        e.target.value
+                      );
+
+                      scheduleSave();
+
+                    }}
+                  >
+                    {category.groups
+                      ?.find(
+                        (group) =>
+                          group.name ===
+                          currentVideo.labels[
+                          `${category.id}Group`
+                          ]
+                      )
+                      ?.options?.map((option) => (
+                        <MenuItem
+                          key={option}
+                          value={option}
+                        >
+                          {option}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </>
+            )}
+
+            {index !== schema.length - 1 && (
+              <Divider sx={{ my: 4 }} />
+            )}
+
+          </Box>
+        ))}
     </Box>
   );
 }

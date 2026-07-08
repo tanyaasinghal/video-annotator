@@ -1,4 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
+} from "@mui/material";
+
+import { useRef } from "react";
+import { saveLabels } from "../../services/fileService";
 import useProjectStore from "../../store/projectStore";
 
 export default function VideoPlayer() {
@@ -8,6 +18,46 @@ export default function VideoPlayer() {
   );
 
   const currentVideo = videos[currentVideoIndex];
+
+  const updateCurrentVideoLabel =
+    useProjectStore(state => state.updateCurrentVideoLabel);
+
+  const folder =
+    useProjectStore(state => state.folder);
+
+  const saveTimeout = useRef(null);
+
+  async function saveCurrentLabels() {
+
+    const state = useProjectStore.getState();
+
+    const labels = {};
+
+    state.videos.forEach(video => {
+
+      labels[video.name] = video.labels;
+
+    });
+
+    await saveLabels(folder, labels);
+
+  }
+
+  function scheduleSave() {
+
+    if (saveTimeout.current) {
+
+      clearTimeout(saveTimeout.current);
+
+    }
+
+    saveTimeout.current = setTimeout(() => {
+
+      saveCurrentLabels();
+
+    }, 500);
+
+  }
 
   if (!currentVideo) {
     return (
@@ -24,6 +74,22 @@ export default function VideoPlayer() {
       </Box>
     );
   }
+
+  const selectSx = {
+    color: "white",
+
+    ".MuiOutlinedInput-notchedOutline": {
+      borderColor: "#666"
+    },
+
+    "& .MuiSvgIcon-root": {
+      color: "white"
+    }
+  };
+
+  const inputLabelSx = {
+    color: "#cccccc"
+  };
 
   return (
     <Box
@@ -62,6 +128,83 @@ export default function VideoPlayer() {
         >
           Video {currentVideoIndex + 1} of {videos.length}
         </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 3,
+            mt: 2
+          }}
+        >
+
+          <FormControl size="small" sx={{ minWidth: 170 }}>
+
+            <InputLabel sx={inputLabelSx}>
+              Batsman Hand
+            </InputLabel>
+
+            <Select
+              sx={selectSx}
+              label="Batsman Hand"
+              value={currentVideo.labels.batsmanHand}
+              onChange={(e) => {
+
+                updateCurrentVideoLabel(
+                  "batsmanHand",
+                  e.target.value
+                );
+
+                scheduleSave();
+
+              }}
+            >
+
+              <MenuItem value="Left">
+                Left
+              </MenuItem>
+
+              <MenuItem value="Right">
+                Right
+              </MenuItem>
+
+            </Select>
+
+          </FormControl>
+
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+
+            <InputLabel sx={inputLabelSx}>Contact</InputLabel>
+
+            <Select
+              sx={selectSx}
+              label="Contact"
+              value={currentVideo.labels.contact}
+              onChange={(e) => {
+
+                updateCurrentVideoLabel(
+                  "contact",
+                  e.target.value
+                );
+
+                scheduleSave();
+
+              }}
+            >
+
+              <MenuItem value="Yes">
+                Yes
+              </MenuItem>
+
+              <MenuItem value="No">
+                No
+              </MenuItem>
+
+            </Select>
+
+          </FormControl>
+
+        </Box>
       </Box>
 
       {/* Video */}

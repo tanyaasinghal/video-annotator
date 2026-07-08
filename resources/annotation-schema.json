@@ -10,6 +10,24 @@
       ]
     },
     {
+      "id": "batsmanHand",
+      "name": "Batsman Hand",
+      "type": "simple",
+      "options": [
+        "Left",
+        "Right"
+      ]
+    },
+    {
+      "id": "contact",
+      "name": "Contact",
+      "type": "simple",
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
       "id": "shotClassification",
       "name": "Shot Classification",
       "type": "group",

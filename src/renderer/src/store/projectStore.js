@@ -22,8 +22,11 @@ const useProjectStore = create((set) => ({
 
       ...video,
 
-      labels:
-        savedLabels[video.name] || { }
+      labels: {
+        batsmanHand: "Right",
+        contact: "Yes",
+        ...(savedLabels[video.name] || {})
+      }
 
     }));
 
