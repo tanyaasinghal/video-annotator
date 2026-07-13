@@ -222,6 +222,7 @@ export default function VideoPlayer() {
           src={`file:///${currentVideo.fullPath.replace(/\\/g, "/")}`}
           controls
           autoPlay
+          loop
           style={{
             maxWidth: "100%",
             maxHeight: "100%",

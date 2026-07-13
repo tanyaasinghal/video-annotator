@@ -5,22 +5,40 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Divider
+  Divider,
+  IconButton
 } from "@mui/material";
 
 import useProjectStore from "../../store/projectStore";
 import { saveLabels } from "../../services/fileService";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import ClearableSelect from "../common/ClearableSelect";
 
 export default function CategorySidebar() {
   const schema = useProjectStore((state) => state.schema);
 
   const currentVideo = useProjectStore((state) => state.currentVideo);
 
+  const currentVideoIndex =
+    useProjectStore((state) => state.currentVideoIndex);
+
   const updateCurrentVideoLabel =
     useProjectStore((state) => state.updateCurrentVideoLabel);
 
   const saveTimeout = useRef(null);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+
+      setOpenDropdownId("shotElevation");
+
+    }, 150);
+
+    return () => clearTimeout(timer);
+
+  }, [currentVideoIndex]);
 
   if (!currentVideo) {
     return (
@@ -102,126 +120,203 @@ export default function CategorySidebar() {
             </Typography>
 
             {category.type === "simple" && (
-              <FormControl fullWidth sx={{ mt: 2 }}>
-                <InputLabel sx={inputLabelSx}>
-                  Select
-                </InputLabel>
 
-                <Select
-                  sx={selectSx}
-                  label="Select"
-                  value={currentVideo.labels[category.id] || ""}
-                  onChange={async (e) => {
-                    updateCurrentVideoLabel(
-                      category.id,
-                      e.target.value
-                    );
+              <ClearableSelect
 
-                    scheduleSave();
-                  }}
-                >
-                  {category.options?.map((option) => (
-                    <MenuItem
-                      key={option}
-                      value={option}
-                    >
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                label="Select"
+
+                value={
+                  currentVideo.labels[category.id] || ""
+                }
+
+                options={
+                  category.options || []
+                }
+
+                open={
+                  openDropdownId === category.id
+                }
+
+                onOpen={() => {
+
+                  setOpenDropdownId(category.id);
+
+                }}
+
+                onClose={() => {
+
+                  setOpenDropdownId(null);
+
+                }}
+
+                selectSx={selectSx}
+
+                inputLabelSx={inputLabelSx}
+
+                onChange={(e) => {
+
+                  updateCurrentVideoLabel(
+                    category.id,
+                    e.target.value
+                  );
+                  setOpenDropdownId(null);
+
+                  scheduleSave();
+
+                }}
+
+                onClear={() => {
+
+                  updateCurrentVideoLabel(
+                    category.id,
+                    ""
+                  );
+
+                  scheduleSave();
+
+                }}
+
+              />
+
             )}
 
             {category.type === "group" && (
               <>
-                <FormControl
-                  fullWidth
-                  sx={{ mt: 2 }}
-                >
-                  <InputLabel sx={inputLabelSx}>
-                    Group
-                  </InputLabel>
+                <ClearableSelect
 
-                  <Select
-                    sx={selectSx}
-                    label="Group"
-                    value={
-                      currentVideo.labels[
-                      `${category.id}Group`
-                      ] || ""
-                    }
-                    onChange={async (e) => {
+                  label="Group"
 
-                      updateCurrentVideoLabel(
-                        `${category.id}Group`,
-                        e.target.value
-                      );
+                  placeholder="Group"
 
-                      updateCurrentVideoLabel(
-                        category.id,
-                        ""
-                      );
+                  value={
+                    currentVideo.labels[
+                    `${category.id}Group`
+                    ] || ""
+                  }
 
-                      scheduleSave();
+                  options={
+                    category.groups?.map(
+                      group => group.name
+                    ) || []
+                  }
 
-                    }}
-                  >
-                    {category.groups?.map((group) => (
-                      <MenuItem
-                        key={group.name}
-                        value={group.name}
-                      >
-                        {group.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                  selectSx={selectSx}
 
-                <FormControl
-                  fullWidth
-                  sx={{ mt: 2 }}
-                >
-                  <InputLabel sx={inputLabelSx}>
-                    Option
-                  </InputLabel>
+                  inputLabelSx={inputLabelSx}
 
-                  <Select
-                    sx={selectSx}
-                    label="Option"
-                    value={
-                      currentVideo.labels[
-                      category.id
-                      ] || ""
-                    }
-                    onChange={async (e) => {
+                  onChange={(e) => {
 
-                      updateCurrentVideoLabel(
-                        category.id,
-                        e.target.value
-                      );
+                    updateCurrentVideoLabel(
+                      `${category.id}Group`,
+                      e.target.value
+                    );
 
-                      scheduleSave();
+                    updateCurrentVideoLabel(
+                      category.id,
+                      ""
+                    );
 
-                    }}
-                  >
-                    {category.groups
+                    setTimeout(() => {
+
+                      setOpenDropdownId(`${category.id}-option`);
+
+                    }, 100);
+
+                    scheduleSave();
+
+                  }}
+
+                  onClear={() => {
+
+                    updateCurrentVideoLabel(
+                      `${category.id}Group`,
+                      ""
+                    );
+
+                    updateCurrentVideoLabel(
+                      category.id,
+                      ""
+                    );
+
+                    scheduleSave();
+
+                  }}
+
+                />
+                <ClearableSelect
+
+                  label="Option"
+
+                  placeholder="Option"
+
+                  value={
+                    currentVideo.labels[
+                    category.id
+                    ] || ""
+                  }
+
+                  options={
+                    category.groups
                       ?.find(
-                        (group) =>
+                        group =>
                           group.name ===
                           currentVideo.labels[
                           `${category.id}Group`
                           ]
                       )
-                      ?.options?.map((option) => (
-                        <MenuItem
-                          key={option}
-                          value={option}
-                        >
-                          {option}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
+                      ?.options || []
+                  }
+
+                  disabled={
+                    !currentVideo.labels[
+                    `${category.id}Group`
+                    ]
+                  }
+
+                  selectSx={selectSx}
+
+                  inputLabelSx={inputLabelSx}
+
+                  open={
+                    openDropdownId === `${category.id}-option`
+                  }
+
+                  onOpen={() => {
+
+                    setOpenDropdownId(`${category.id}-option`);
+
+                  }}
+
+                  onClose={() => {
+
+                    setOpenDropdownId(null);
+
+                  }}
+
+                  onChange={(e) => {
+
+                    updateCurrentVideoLabel(
+                      category.id,
+                      e.target.value
+                    );
+                    setOpenDropdownId(null);
+
+                    scheduleSave();
+
+                  }}
+
+                  onClear={() => {
+
+                    updateCurrentVideoLabel(
+                      category.id,
+                      ""
+                    );
+
+                    scheduleSave();
+
+                  }}
+
+                />
               </>
             )}
 
