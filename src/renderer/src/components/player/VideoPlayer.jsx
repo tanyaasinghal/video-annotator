@@ -174,16 +174,16 @@ export default function VideoPlayer() {
 
           <FormControl size="small" sx={{ minWidth: 150 }}>
 
-            <InputLabel sx={inputLabelSx}>Contact</InputLabel>
+            <InputLabel sx={inputLabelSx}>Footwork</InputLabel>
 
             <Select
               sx={selectSx}
-              label="Contact"
-              value={currentVideo.labels.contact}
+              label="Footwork"
+              value={currentVideo.labels.footwork}
               onChange={(e) => {
 
                 updateCurrentVideoLabel(
-                  "contact",
+                  "footwork",
                   e.target.value
                 );
 
@@ -192,12 +192,12 @@ export default function VideoPlayer() {
               }}
             >
 
-              <MenuItem value="Yes">
-                Yes
+              <MenuItem value="Front-foot">
+                Front-foot
               </MenuItem>
 
-              <MenuItem value="No">
-                No
+              <MenuItem value="Back-foot">
+                Back-foot
               </MenuItem>
 
             </Select>

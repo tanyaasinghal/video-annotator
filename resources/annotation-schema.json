@@ -23,12 +23,12 @@
       ]
     },
     {
-      "id": "contact",
-      "name": "Contact",
+      "id": "footwork",
+      "name": "Footwork",
       "type": "simple",
       "options": [
-        "Yes",
-        "No"
+        "Front-foot",
+        "Back-foot"
       ]
     },
     {

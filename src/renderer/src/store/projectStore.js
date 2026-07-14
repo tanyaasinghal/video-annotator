@@ -24,7 +24,7 @@ const useProjectStore = create((set) => ({
 
       labels: {
         batsmanHand: "Right",
-        contact: "Yes",
+        footwork: "Front-foot",
         ...(savedLabels[video.name] || {})
       }
 

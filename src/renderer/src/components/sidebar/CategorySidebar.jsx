@@ -104,7 +104,7 @@ export default function CategorySidebar() {
         .filter(
           category =>
             category.id !== "batsmanHand" &&
-            category.id !== "contact"
+            category.id !== "footwork"
         )
         .map((category, index) => (
           <Box key={category.id}>
